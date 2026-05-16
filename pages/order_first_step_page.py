@@ -16,12 +16,17 @@ class OrderFirstStepPage(BasePage):
     @allure.step("Заполнить первый шаг заказа")
     def fill_form(self, name, surname, address, metro, phone):
         self.wait_until_visible(self.NAME_INPUT).send_keys(name)
-        self.driver.find_element(*self.SURNAME_INPUT).send_keys(surname)
-        self.driver.find_element(*self.ADDRESS_INPUT).send_keys(address)
-        metro_input = self.driver.find_element(*self.METRO_INPUT)
+        self.find_element(self.SURNAME_INPUT).send_keys(surname)
+        self.find_element(self.ADDRESS_INPUT).send_keys(address)
+        metro_input = self.find_element(self.METRO_INPUT)
         metro_input.send_keys(metro)
         self.wait_until_clickable(self.METRO_OPTION).click()
-        self.driver.find_element(*self.PHONE_INPUT).send_keys(phone)
+        self.find_element(self.PHONE_INPUT).send_keys(phone)
+
+    @allure.step("Дождаться загрузки первого шага заказа")
+    def wait_until_loaded(self):
+        self.wait_until_visible(self.NAME_INPUT)
+        return self
 
     @allure.step("Перейти ко второму шагу")
     def click_next(self):
